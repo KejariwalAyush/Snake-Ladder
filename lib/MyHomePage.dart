@@ -20,80 +20,12 @@ class _MyHomePageState extends State<MyHomePage> {
   bool plyturn = true;
   bool isComputer = false;
 
-  Future<bool> _onWillPop() async {
-    return (await showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-            title: new Text('Are you sure?'),
-            content: new Text('Do you want to exit the App'),
-            actions: <Widget>[
-              new FlatButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: new Text('No'),
-              ),
-              new FlatButton(
-                onPressed: () => exit(0),
-                child: new Text('Yes'),
-              ),
-            ],
-          ),
-        )) ??
-        false;
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Snakes & Ladders'),
-          automaticallyImplyLeading: false,
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(!isComputer ? Icons.computer : Icons.people_outline),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (_) => new AlertDialog(
-                            title: new Text("Snakes & Ladders"),
-                            content: new Text(isComputer
-                                ? "Would you like to change Player1 to mannual"
-                                : "Would you like to convert Player 1 to Computer"),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text('Yes'),
-                                onPressed: () {
-                                  setState(() {
-                                    isComputer = !isComputer;
-                                    plyturn = true;
-                                    print('isComputer = $isComputer');
-                                  });
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              FlatButton(
-                                child: Text('No'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          ));
-                  // setState(() {
-                  //   isComputer = !isComputer;
-                  // });
-                }),
-            IconButton(
-                icon: Icon(Icons.refresh),
-                onPressed: () {
-                  setState(() {
-                    // ply1=0;ply2=0;
-                    ply1 = 100;
-                  });
-                })
-          ],
-        ),
+        appBar: buildAppBar(context),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -145,128 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ],
                           ),
                         )
-                      : InkWell(
-                          onTap: () {
-                            var randomizer = new Random();
-                            setState(() {
-                              toAnimate = true;
-                              Future.delayed(Duration(seconds: 1))
-                                  .whenComplete(() {
-                                setState(() {
-                                  randomNo = randomizer.nextInt(6) + 1;
-                                  print(randomNo);
-                                  toAnimate = false;
-                                  ply1 == 0
-                                      ? randomNo == 1
-                                          ? ply1 = randomNo
-                                          : ply1 = 0
-                                      : ply1 + randomNo > 100
-                                          ? ply1 = ply1
-                                          : ply1 = ply1 + randomNo;
-                                  Future.delayed(Duration(seconds: 1))
-                                      .whenComplete(() {
-                                    setState(() {
-                                      switch (ply1) {
-                                        case 17:
-                                          ply1 = 6;
-                                          break;
-                                        case 33:
-                                          ply1 = 14;
-                                          break;
-                                        case 39:
-                                          ply1 = 28;
-                                          break;
-                                        case 54:
-                                          ply1 = 46;
-                                          break;
-                                        case 81:
-                                          ply1 = 43;
-                                          break;
-                                        case 99:
-                                          ply1 = 18;
-                                          break;
-
-                                        case 84:
-                                          ply1 = 95;
-                                          break;
-                                        case 47:
-                                          ply1 = 86;
-                                          break;
-                                        case 50:
-                                          ply1 = 59;
-                                          break;
-                                        case 2:
-                                          ply1 = 43;
-                                          break;
-                                        default:
-                                      }
-                                    });
-                                  });
-                                  if (ply1 == 100)
-                                    showDialog(
-                                        context: context,
-                                        builder: (_) => new AlertDialog(
-                                              title:
-                                                  new Text("Snakes & Ladders"),
-                                              content:
-                                                  new Text("Player 1 WON !!!"),
-                                              actions: <Widget>[
-                                                FlatButton(
-                                                  child: Text('Yes'),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      ply1 = 0;
-                                                      ply2 = 0;
-                                                    });
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                                FlatButton(
-                                                  child: Text('No'),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                              ],
-                                            ));
-                                });
-                                Future.delayed(Duration(milliseconds: 1500))
-                                    .whenComplete(() {
-                                  setState(() {
-                                    plyturn = !plyturn;
-                                  });
-                                });
-                              });
-                            });
-                          },
-                          child: SizedBox(
-                            // height: 100,
-                            // width: 500,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Expanded(
-                                  child: Icon(
-                                    Icons.person,
-                                    color: ply1Color,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    height: 150,
-                                    child: toAnimate
-                                        ? Flare(
-                                            animation: '1',
-                                          )
-                                        : Image.asset(
-                                            'assets/images/$randomNo.png'),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      : player1(context),
               Expanded(
                 flex: 2,
                 child: Padding(
@@ -394,224 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     )
-                  : InkWell(
-                      onTap: () {
-                        var randomizer =
-                            new Random(); // can get a seed as a parameter
-
-                        // Integer between 0 and 100 (0 can be 100 not)
-                        setState(() {
-                          toAnimate = true;
-                          Future.delayed(Duration(seconds: 1)).whenComplete(() {
-                            setState(() {
-                              randomNo = randomizer.nextInt(6) + 1;
-                              print(randomNo);
-                              toAnimate = false;
-                              ply2 == 0
-                                  ? randomNo == 1 ? ply2 = randomNo : ply2 = 0
-                                  : ply2 + randomNo > 100
-                                      ? ply2 = ply2
-                                      : ply2 = ply2 + randomNo;
-                              Future.delayed(Duration(seconds: 1))
-                                  .whenComplete(() {
-                                setState(() {
-                                  switch (ply2) {
-                                    case 17:
-                                      ply2 = 6;
-                                      break;
-                                    case 33:
-                                      ply2 = 14;
-                                      break;
-                                    case 39:
-                                      ply2 = 28;
-                                      break;
-                                    case 54:
-                                      ply2 = 46;
-                                      break;
-                                    case 81:
-                                      ply2 = 43;
-                                      break;
-                                    case 99:
-                                      ply2 = 18;
-                                      break;
-
-                                    case 84:
-                                      ply2 = 95;
-                                      break;
-                                    case 47:
-                                      ply2 = 86;
-                                      break;
-                                    case 50:
-                                      ply2 = 59;
-                                      break;
-                                    case 2:
-                                      ply2 = 43;
-                                      break;
-                                    default:
-                                  }
-                                });
-                              });
-                              if (ply2 == 100)
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => new AlertDialog(
-                                          title: new Text("Snakes & Ladders"),
-                                          content: new Text("Player 2 WON !!!"),
-                                          actions: <Widget>[
-                                            FlatButton(
-                                              child: Text('Yes'),
-                                              onPressed: () {
-                                                setState(() {
-                                                  ply1 = 0;
-                                                  ply2 = 0;
-                                                });
-                                                Navigator.of(context).pop();
-                                                // Navigator.pushReplacement(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //       builder: (context) =>
-                                                //           new MyHomePage()),
-                                                // );
-                                              },
-                                            ),
-                                            FlatButton(
-                                              child: Text('No'),
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                          ],
-                                        ));
-                            });
-                          });
-                          Future.delayed(Duration(milliseconds: 1500))
-                              .whenComplete(() {
-                            setState(() {
-                              plyturn = !plyturn;
-                              if (isComputer) {
-                                toAnimate = true;
-                                Future.delayed(Duration(seconds: 1))
-                                    .whenComplete(() {
-                                  setState(() {
-                                    randomNo = randomizer.nextInt(6) + 1;
-                                    print(randomNo);
-                                    toAnimate = false;
-                                    ply1 == 0
-                                        ? randomNo == 1
-                                            ? ply1 = randomNo
-                                            : ply1 = 0
-                                        : ply1 + randomNo > 100
-                                            ? ply1 = ply1
-                                            : ply1 = ply1 + randomNo;
-                                    Future.delayed(Duration(seconds: 1))
-                                        .whenComplete(() {
-                                      setState(() {
-                                        switch (ply1) {
-                                          case 17:
-                                            ply1 = 6;
-                                            break;
-                                          case 33:
-                                            ply1 = 14;
-                                            break;
-                                          case 39:
-                                            ply1 = 28;
-                                            break;
-                                          case 54:
-                                            ply1 = 46;
-                                            break;
-                                          case 81:
-                                            ply1 = 43;
-                                            break;
-                                          case 99:
-                                            ply1 = 18;
-                                            break;
-
-                                          case 84:
-                                            ply1 = 95;
-                                            break;
-                                          case 47:
-                                            ply1 = 86;
-                                            break;
-                                          case 50:
-                                            ply1 = 59;
-                                            break;
-                                          case 2:
-                                            ply1 = 43;
-                                            break;
-                                          default:
-                                        }
-                                      });
-                                    });
-                                    if (ply1 == 100)
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) => new AlertDialog(
-                                                title: new Text(
-                                                    "Snakes & Ladders"),
-                                                content: new Text(
-                                                    "Player 1 WON !!!"),
-                                                actions: <Widget>[
-                                                  FlatButton(
-                                                    child: Text('Yes'),
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        ply1 = 0;
-                                                        ply2 = 0;
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                  ),
-                                                  FlatButton(
-                                                    child: Text('No'),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                  ),
-                                                ],
-                                              ));
-                                  });
-                                  Future.delayed(Duration(milliseconds: 1500))
-                                      .whenComplete(() {
-                                    setState(() {
-                                      plyturn = !plyturn;
-                                    });
-                                  });
-                                });
-                              }
-                            });
-                          });
-                        });
-                      },
-                      child: SizedBox(
-                        // height: 100,
-                        // width: 500,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Expanded(
-                              child: Icon(
-                                Icons.person,
-                                color: ply2Color,
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                height: 150,
-                                child: toAnimate
-                                    ? Flare(
-                                        animation: '1',
-                                      )
-                                    : Image.asset(
-                                        'assets/images/$randomNo.png'),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  : player2(context),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
@@ -622,6 +216,430 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text('Are you sure?'),
+            content: new Text('Do you want to exit the App'),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text('No'),
+              ),
+              new FlatButton(
+                onPressed: () => exit(0),
+                child: new Text('Yes'),
+              ),
+            ],
+          ),
+        )) ??
+        false;
+  }
+
+  InkWell player2(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        var randomizer = new Random(); // can get a seed as a parameter
+
+        // Integer between 0 and 100 (0 can be 100 not)
+        setState(() {
+          toAnimate = true;
+          Future.delayed(Duration(seconds: 1)).whenComplete(() {
+            setState(() {
+              randomNo = randomizer.nextInt(6) + 1;
+              print(randomNo);
+              toAnimate = false;
+              ply2 == 0
+                  ? randomNo == 1 ? ply2 = randomNo : ply2 = 0
+                  : ply2 + randomNo > 100
+                      ? ply2 = ply2
+                      : ply2 = ply2 + randomNo;
+              Future.delayed(Duration(seconds: 1)).whenComplete(() {
+                setState(() {
+                  switch (ply2) {
+                    case 17:
+                      ply2 = 6;
+                      break;
+                    case 33:
+                      ply2 = 14;
+                      break;
+                    case 39:
+                      ply2 = 28;
+                      break;
+                    case 54:
+                      ply2 = 46;
+                      break;
+                    case 81:
+                      ply2 = 43;
+                      break;
+                    case 99:
+                      ply2 = 18;
+                      break;
+
+                    case 84:
+                      ply2 = 95;
+                      break;
+                    case 47:
+                      ply2 = 86;
+                      break;
+                    case 50:
+                      ply2 = 59;
+                      break;
+                    case 2:
+                      ply2 = 43;
+                      break;
+                    default:
+                  }
+                });
+              });
+              if (ply2 == 100)
+                showDialog(
+                    context: context,
+                    builder: (_) => new AlertDialog(
+                          title: new Text("Snakes & Ladders"),
+                          content: new Text(
+                              "Player 2 WON !!!\nDo you want to Restart ?"),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Yes'),
+                              onPressed: () {
+                                setState(() {
+                                  ply1 = 0;
+                                  ply2 = 0;
+                                });
+                                Navigator.of(context).pop();
+                                // Navigator.pushReplacement(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) =>
+                                //           new MyHomePage()),
+                                // );
+                              },
+                            ),
+                            FlatButton(
+                              child: Text('No'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ));
+            });
+          });
+          Future.delayed(Duration(milliseconds: 1500)).whenComplete(() {
+            setState(() {
+              plyturn = !plyturn;
+              if (isComputer) {
+                toAnimate = true;
+                Future.delayed(Duration(seconds: 1)).whenComplete(() {
+                  setState(() {
+                    randomNo = randomizer.nextInt(6) + 1;
+                    print(randomNo);
+                    toAnimate = false;
+                    ply1 == 0
+                        ? randomNo == 1 ? ply1 = randomNo : ply1 = 0
+                        : ply1 + randomNo > 100
+                            ? ply1 = ply1
+                            : ply1 = ply1 + randomNo;
+                    Future.delayed(Duration(seconds: 1)).whenComplete(() {
+                      setState(() {
+                        switch (ply1) {
+                          case 17:
+                            ply1 = 6;
+                            break;
+                          case 33:
+                            ply1 = 14;
+                            break;
+                          case 39:
+                            ply1 = 28;
+                            break;
+                          case 54:
+                            ply1 = 46;
+                            break;
+                          case 81:
+                            ply1 = 43;
+                            break;
+                          case 99:
+                            ply1 = 18;
+                            break;
+
+                          case 84:
+                            ply1 = 95;
+                            break;
+                          case 47:
+                            ply1 = 86;
+                            break;
+                          case 50:
+                            ply1 = 59;
+                            break;
+                          case 2:
+                            ply1 = 43;
+                            break;
+                          default:
+                        }
+                      });
+                    });
+                    if (ply1 == 100)
+                      showDialog(
+                          context: context,
+                          builder: (_) => new AlertDialog(
+                                title: new Text("Snakes & Ladders"),
+                                content: new Text(
+                                    "Computer WON !!!\nDo you want to Restart ?"),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text('Yes'),
+                                    onPressed: () {
+                                      setState(() {
+                                        ply1 = 0;
+                                        ply2 = 0;
+                                      });
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  FlatButton(
+                                    child: Text('No'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              ));
+                  });
+                  Future.delayed(Duration(milliseconds: 1500)).whenComplete(() {
+                    setState(() {
+                      plyturn = !plyturn;
+                    });
+                  });
+                });
+              }
+            });
+          });
+        });
+      },
+      child: SizedBox(
+        // height: 100,
+        // width: 500,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Icon(
+                Icons.person,
+                color: ply2Color,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                height: 150,
+                child: toAnimate
+                    ? Flare(
+                        animation: '1',
+                      )
+                    : Image.asset('assets/images/$randomNo.png'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  InkWell player1(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        var randomizer = new Random();
+        setState(() {
+          toAnimate = true;
+          Future.delayed(Duration(seconds: 1)).whenComplete(() {
+            setState(() {
+              randomNo = randomizer.nextInt(6) + 1;
+              print(randomNo);
+              toAnimate = false;
+              ply1 == 0
+                  ? randomNo == 1 ? ply1 = randomNo : ply1 = 0
+                  : ply1 + randomNo > 100
+                      ? ply1 = ply1
+                      : ply1 = ply1 + randomNo;
+              Future.delayed(Duration(seconds: 1)).whenComplete(() {
+                setState(() {
+                  switch (ply1) {
+                    case 17:
+                      ply1 = 6;
+                      break;
+                    case 33:
+                      ply1 = 14;
+                      break;
+                    case 39:
+                      ply1 = 28;
+                      break;
+                    case 54:
+                      ply1 = 46;
+                      break;
+                    case 81:
+                      ply1 = 43;
+                      break;
+                    case 99:
+                      ply1 = 18;
+                      break;
+
+                    case 84:
+                      ply1 = 95;
+                      break;
+                    case 47:
+                      ply1 = 86;
+                      break;
+                    case 50:
+                      ply1 = 59;
+                      break;
+                    case 2:
+                      ply1 = 43;
+                      break;
+                    default:
+                  }
+                });
+              });
+              if (ply1 == 100)
+                showDialog(
+                    context: context,
+                    builder: (_) => new AlertDialog(
+                          title: new Text("Snakes & Ladders"),
+                          content: new Text(
+                              "Player 1 WON !!!\nDo you want to Restart ?"),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Yes'),
+                              onPressed: () {
+                                setState(() {
+                                  ply1 = 0;
+                                  ply2 = 0;
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: Text('No'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ));
+            });
+            Future.delayed(Duration(milliseconds: 1500)).whenComplete(() {
+              setState(() {
+                plyturn = !plyturn;
+              });
+            });
+          });
+        });
+      },
+      child: SizedBox(
+        // height: 100,
+        // width: 500,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Icon(
+                Icons.person,
+                color: ply1Color,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                height: 150,
+                child: toAnimate
+                    ? Flare(
+                        animation: '1',
+                      )
+                    : Image.asset('assets/images/$randomNo.png'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      title: Text('Snakes & Ladders'),
+      automaticallyImplyLeading: false,
+      actions: <Widget>[
+        IconButton(
+            icon: Icon(!isComputer ? Icons.computer : Icons.people_outline),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (_) => new AlertDialog(
+                        title: new Text("Snakes & Ladders"),
+                        content: new Text(isComputer
+                            ? "Would you like to change Player1 to mannual"
+                            : "Would you like to convert Player 1 to Computer"),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('Yes'),
+                            onPressed: () {
+                              setState(() {
+                                isComputer = !isComputer;
+                                plyturn = true;
+                                print('isComputer = $isComputer');
+                              });
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          FlatButton(
+                            child: Text('No'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ));
+              // setState(() {
+              //   isComputer = !isComputer;
+              // });
+            }),
+        IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (_) => new AlertDialog(
+                        title: new Text("Snakes & Ladders"),
+                        content: new Text("Would you like Restart ?"),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('Yes'),
+                            onPressed: () {
+                              setState(() {
+                                ply1 = 0;
+                                ply2 = 0;
+                              });
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          FlatButton(
+                            child: Text('No'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ));
+              // setState(() {
+              //   ply1=0;ply2=0;
+              //   // ply1 = 100;
+              // });
+            })
+      ],
     );
   }
 }
