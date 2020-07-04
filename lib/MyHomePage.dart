@@ -95,104 +95,114 @@ class _MyHomePageState extends State<MyHomePage> {
                       : player1(context),
               Expanded(
                 flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Stack(
-                    children: [
-                      Container(
-                        child: GridView.count(
-                          crossAxisCount: 10, padding: EdgeInsets.all(2),
-                          // Generate 100 widgets that display their index in the List.
-                          children: List.generate(100, (index) {
-                            return new Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0.0),
-                              ),
-                              margin: EdgeInsets.all(0),
-                              borderOnForeground: true,
-                              // key: list[index],
-                              color: ply1 == 100 - index || ply2 == 100 - index
-                                  ? Color.fromRGBO(255, 255, 255, 1)
-                                  : (10 <= index && index <= 19) ||
-                                          (30 <= index && index <= 39) ||
-                                          (50 <= index && index <= 59) ||
-                                          (70 <= index && index <= 79) ||
-                                          (90 <= index && index <= 99)
-                                      ? index.isOdd
-                                          ? Color.fromRGBO(220, 200, 109, 1)
-                                          : Color.fromRGBO(39, 25, 60, 1)
-                                      : index.isEven
-                                          ? Color.fromRGBO(220, 200, 109, 1)
-                                          : Color.fromRGBO(39, 25, 60, 1),
-                              child: Text(
-                                ' ${order(100 - index)}',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white),
-                              ),
-                            );
-                          }),
+                child: Container(
+                  height: MediaQuery.of(context).size.width > 500
+                      ? 500
+                      : MediaQuery.of(context).size.width,
+                  width: MediaQuery.of(context).size.width > 500
+                      ? 500
+                      : MediaQuery.of(context).size.width,
+                  // width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: [
+                        Container(
+                          child: GridView.count(
+                            crossAxisCount: 10, padding: EdgeInsets.all(2),
+                            // Generate 100 widgets that display their index in the List.
+                            children: List.generate(100, (index) {
+                              return new Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0.0),
+                                ),
+                                margin: EdgeInsets.all(0),
+                                borderOnForeground: true,
+                                // key: list[index],
+                                color: ply1 == 100 - index ||
+                                        ply2 == 100 - index
+                                    ? Color.fromRGBO(255, 255, 255, 1)
+                                    : (10 <= index && index <= 19) ||
+                                            (30 <= index && index <= 39) ||
+                                            (50 <= index && index <= 59) ||
+                                            (70 <= index && index <= 79) ||
+                                            (90 <= index && index <= 99)
+                                        ? index.isOdd
+                                            ? Color.fromRGBO(220, 200, 109, 1)
+                                            : Color.fromRGBO(39, 25, 60, 1)
+                                        : index.isEven
+                                            ? Color.fromRGBO(220, 200, 109, 1)
+                                            : Color.fromRGBO(39, 25, 60, 1),
+                                child: Text(
+                                  ' ${order(100 - index)}',
+                                  style: TextStyle(
+                                      fontSize: 10, color: Colors.white),
+                                ),
+                              );
+                            }),
+                          ),
                         ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(2),
-                        alignment: Alignment.topLeft,
-                        child: Image.asset(
-                          'assets/images/custom.png',
-                          fit: BoxFit.cover,
+                        Container(
+                          padding: EdgeInsets.all(2),
+                          alignment: Alignment.topLeft,
+                          child: Image.asset(
+                            'assets/images/custom.png',
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      Container(
-                        child: GridView.count(
-                          crossAxisCount: 10, padding: EdgeInsets.all(2),
-                          // Generate 100 widgets that display their index in the List.
-                          children: List.generate(100, (index) {
-                            return new Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0.0),
-                              ),
-                              margin: EdgeInsets.all(0),
-                              borderOnForeground: true,
-                              // key: list[index],
-                              color: Color.fromRGBO(255, 255, 255, 0.0),
-                              child: Hero(
-                                tag: ply1 == 100 - index
-                                    ? 'ply1'
-                                    : ply2 == 100 - index ? 'ply2' : 'None',
-                                child: ply1 == 100 - index
-                                    ? ply1 == ply2
-                                        ? Center(
-                                            child: Icon(
-                                              Icons.people,
-                                              color: Colors.grey,
-                                            ),
-                                          )
-                                        : Center(
-                                            child: Icon(
-                                              Icons.person,
-                                              color: ply1Color,
-                                            ),
-                                          )
-                                    : ply2 == 100 - index
-                                        ? ply1 == ply2
-                                            ? Center(
-                                                child: Icon(
-                                                  Icons.people,
-                                                  color: Colors.grey,
-                                                ),
-                                              )
-                                            : Center(
-                                                child: Icon(
-                                                  Icons.person,
-                                                  color: ply2Color,
-                                                ),
-                                              )
-                                        : SizedBox(),
-                              ),
-                            );
-                          }),
+                        Container(
+                          child: GridView.count(
+                            crossAxisCount: 10, padding: EdgeInsets.all(2),
+                            // Generate 100 widgets that display their index in the List.
+                            children: List.generate(100, (index) {
+                              return new Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0.0),
+                                ),
+                                margin: EdgeInsets.all(0),
+                                borderOnForeground: true,
+                                // key: list[index],
+                                color: Color.fromRGBO(255, 255, 255, 0.0),
+                                child: Hero(
+                                  tag: ply1 == 100 - index
+                                      ? 'ply1'
+                                      : ply2 == 100 - index ? 'ply2' : 'None',
+                                  child: ply1 == 100 - index
+                                      ? ply1 == ply2
+                                          ? Center(
+                                              child: Icon(
+                                                Icons.people,
+                                                color: Colors.grey,
+                                              ),
+                                            )
+                                          : Center(
+                                              child: Icon(
+                                                Icons.person,
+                                                color: ply1Color,
+                                              ),
+                                            )
+                                      : ply2 == 100 - index
+                                          ? ply1 == ply2
+                                              ? Center(
+                                                  child: Icon(
+                                                    Icons.people,
+                                                    color: Colors.grey,
+                                                  ),
+                                                )
+                                              : Center(
+                                                  child: Icon(
+                                                    Icons.person,
+                                                    color: ply2Color,
+                                                  ),
+                                                )
+                                          : SizedBox(),
+                                ),
+                              );
+                            }),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -318,10 +328,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     print(randomNo);
                     toAnimate = false;
                     ply1 == 0
-                        ? randomNo == 1 ? ply1 = randomNo : ply1 = 0
+                        ? randomNo == 1 ? ply1 = order(randomNo) : ply1 = 0
                         : ply1 + randomNo > 100
                             ? ply1 = ply1
-                            : ply1 = order(ply1 + randomNo);
+                            : ply1 = order(ply1) + order(randomNo);
                     Future.delayed(Duration(seconds: 1)).whenComplete(() {
                       setState(() {
                         ply1 = snakeLadderCmd(ply1);
@@ -396,37 +406,67 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int snakeLadderCmd(int ply) {
     switch (ply) {
-      case 17:
-        ply = 6;
-        break;
-      case 33:
-        ply = 14;
-        break;
-      case 39:
-        ply = 28;
-        break;
-      case 54:
-        ply = 46;
-        break;
-      case 81:
-        ply = 43;
-        break;
+      // Snakes
       case 99:
-        ply = 18;
+        ply = 65;
         break;
-
-      case 84:
-        ply = 95;
+      case 95:
+        ply = 72;
+        break;
+      case 79:
+        ply = 42;
+        break;
+      case 68:
+        ply = 50;
+        break;
+      case 56:
+        ply = 36;
         break;
       case 47:
-        ply = 86;
+        ply = 33;
         break;
-      case 50:
-        ply = 59;
+      case 37:
+        ply = 21;
         break;
-      case 2:
+      case 26:
+        ply = 16;
+        break;
+      case 30:
+        ply = 8;
+        break;
+      case 18:
+        ply = 4;
+        break;
+
+      // Ladders
+      case 6:
+        ply = 14;
+        break;
+      case 20:
+        ply = 22;
+        break;
+      case 28:
+        ply = 46;
+        break;
+      case 40:
         ply = 43;
         break;
+      case 49:
+        ply = 53;
+        break;
+      case 58:
+        ply = 64;
+        break;
+      case 61:
+        ply = 81;
+        break;
+      case 71:
+        ply = 92;
+        break;
+      case 75:
+        ply = 97;
+        break;
+
       default:
     }
     return ply;
