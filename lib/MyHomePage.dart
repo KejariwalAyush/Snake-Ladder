@@ -20,6 +20,21 @@ class _MyHomePageState extends State<MyHomePage> {
   bool plyturn = true;
   bool isComputer = false;
 
+  int order(int n) {
+    if (n <= 10)
+      return 11 - n;
+    else if (n <= 30 && n > 20)
+      return 31 - n + 20;
+    else if (n <= 50 && n > 40)
+      return 51 - n + 40;
+    else if (n <= 70 && n > 60)
+      return 71 - n + 60;
+    else if (n <= 90 && n > 80)
+      return 91 - n + 80;
+    else
+      return n;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -109,15 +124,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                       : index.isEven
                                           ? Color.fromRGBO(220, 200, 109, 1)
                                           : Color.fromRGBO(39, 25, 60, 1),
-                              child: Hero(
-                                tag: ply1 == 100 - index
-                                    ? 'ply1'
-                                    : ply2 == 100 - index ? 'ply2' : 'None',
-                                child: Text(
-                                  ' ${100 - index}',
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.white),
-                                ),
+                              child: Text(
+                                ' ${order(100 - index)}',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white),
                               ),
                             );
                           }),
@@ -127,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: EdgeInsets.all(2),
                         alignment: Alignment.topLeft,
                         child: Image.asset(
-                          'assets/images/board.png',
+                          'assets/images/custom.png',
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -257,43 +267,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   ? randomNo == 1 ? ply2 = randomNo : ply2 = 0
                   : ply2 + randomNo > 100
                       ? ply2 = ply2
-                      : ply2 = ply2 + randomNo;
+                      : ply2 = order(ply2 + randomNo);
               Future.delayed(Duration(seconds: 1)).whenComplete(() {
                 setState(() {
-                  switch (ply2) {
-                    case 17:
-                      ply2 = 6;
-                      break;
-                    case 33:
-                      ply2 = 14;
-                      break;
-                    case 39:
-                      ply2 = 28;
-                      break;
-                    case 54:
-                      ply2 = 46;
-                      break;
-                    case 81:
-                      ply2 = 43;
-                      break;
-                    case 99:
-                      ply2 = 18;
-                      break;
-
-                    case 84:
-                      ply2 = 95;
-                      break;
-                    case 47:
-                      ply2 = 86;
-                      break;
-                    case 50:
-                      ply2 = 59;
-                      break;
-                    case 2:
-                      ply2 = 43;
-                      break;
-                    default:
-                  }
+                  ply2 = snakeLadderCmd(ply2);
                 });
               });
               if (ply2 == 100)
@@ -344,43 +321,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         ? randomNo == 1 ? ply1 = randomNo : ply1 = 0
                         : ply1 + randomNo > 100
                             ? ply1 = ply1
-                            : ply1 = ply1 + randomNo;
+                            : ply1 = order(ply1 + randomNo);
                     Future.delayed(Duration(seconds: 1)).whenComplete(() {
                       setState(() {
-                        switch (ply1) {
-                          case 17:
-                            ply1 = 6;
-                            break;
-                          case 33:
-                            ply1 = 14;
-                            break;
-                          case 39:
-                            ply1 = 28;
-                            break;
-                          case 54:
-                            ply1 = 46;
-                            break;
-                          case 81:
-                            ply1 = 43;
-                            break;
-                          case 99:
-                            ply1 = 18;
-                            break;
-
-                          case 84:
-                            ply1 = 95;
-                            break;
-                          case 47:
-                            ply1 = 86;
-                            break;
-                          case 50:
-                            ply1 = 59;
-                            break;
-                          case 2:
-                            ply1 = 43;
-                            break;
-                          default:
-                        }
+                        ply1 = snakeLadderCmd(ply1);
                       });
                     });
                     if (ply1 == 100)
@@ -450,6 +394,44 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  int snakeLadderCmd(int ply) {
+    switch (ply) {
+      case 17:
+        ply = 6;
+        break;
+      case 33:
+        ply = 14;
+        break;
+      case 39:
+        ply = 28;
+        break;
+      case 54:
+        ply = 46;
+        break;
+      case 81:
+        ply = 43;
+        break;
+      case 99:
+        ply = 18;
+        break;
+
+      case 84:
+        ply = 95;
+        break;
+      case 47:
+        ply = 86;
+        break;
+      case 50:
+        ply = 59;
+        break;
+      case 2:
+        ply = 43;
+        break;
+      default:
+    }
+    return ply;
+  }
+
   InkWell player1(BuildContext context) {
     return InkWell(
       onTap: () {
@@ -465,43 +447,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   ? randomNo == 1 ? ply1 = randomNo : ply1 = 0
                   : ply1 + randomNo > 100
                       ? ply1 = ply1
-                      : ply1 = ply1 + randomNo;
+                      : ply1 = order(ply1 + randomNo);
               Future.delayed(Duration(seconds: 1)).whenComplete(() {
                 setState(() {
-                  switch (ply1) {
-                    case 17:
-                      ply1 = 6;
-                      break;
-                    case 33:
-                      ply1 = 14;
-                      break;
-                    case 39:
-                      ply1 = 28;
-                      break;
-                    case 54:
-                      ply1 = 46;
-                      break;
-                    case 81:
-                      ply1 = 43;
-                      break;
-                    case 99:
-                      ply1 = 18;
-                      break;
-
-                    case 84:
-                      ply1 = 95;
-                      break;
-                    case 47:
-                      ply1 = 86;
-                      break;
-                    case 50:
-                      ply1 = 59;
-                      break;
-                    case 2:
-                      ply1 = 43;
-                      break;
-                    default:
-                  }
+                  ply1 = snakeLadderCmd(ply1);
                 });
               });
               if (ply1 == 100)
