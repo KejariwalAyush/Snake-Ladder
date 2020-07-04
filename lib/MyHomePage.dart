@@ -277,8 +277,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ? randomNo == 1 ? ply2 = randomNo : ply2 = 0
                   : ply2 + randomNo > 100
                       ? ply2 = ply2
-                      : ply2 = order(ply2) + randomNo;
-              ply2 = order(ply2);
+                      : ply2 = order(order(ply2) + randomNo);
               Future.delayed(Duration(seconds: 1)).whenComplete(() {
                 setState(() {
                   ply2 = snakeLadderCmd(ply2);
@@ -406,6 +405,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   int snakeLadderCmd(int ply) {
+    order(ply);
     switch (ply) {
       // Snakes
       case 99:
@@ -470,7 +470,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       default:
     }
-    return ply;
+    return order(ply);
   }
 
   InkWell player1(BuildContext context) {
@@ -485,10 +485,10 @@ class _MyHomePageState extends State<MyHomePage> {
               print(randomNo);
               toAnimate = false;
               ply1 == 0
-                  ? randomNo == 1 ? ply1 = randomNo : ply1 = 0
+                  ? randomNo == 1 ? ply1 = order(randomNo) : ply1 = 0
                   : ply1 + randomNo > 100
                       ? ply1 = ply1
-                      : ply1 = order(ply1 + randomNo);
+                      : ply1 = order(order(ply1) + randomNo);
               Future.delayed(Duration(seconds: 1)).whenComplete(() {
                 setState(() {
                   ply1 = snakeLadderCmd(ply1);
