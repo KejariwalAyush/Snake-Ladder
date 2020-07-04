@@ -404,9 +404,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  int snakeLadderCmd(int ply) {
-    order(ply);
-    switch (ply) {
+  int snakeLadderCmd(int ply1) {
+    // order(ply);
+    int ply = 0;
+    switch (ply1) {
       // Snakes
       case 99:
         ply = 65;
@@ -470,7 +471,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       default:
     }
-    return order(ply);
+    return ply == 0 ? ply1 : order(ply);
   }
 
   InkWell player1(BuildContext context) {
