@@ -277,7 +277,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ? randomNo == 1 ? ply2 = randomNo : ply2 = 0
                   : ply2 + randomNo > 100
                       ? ply2 = ply2
-                      : ply2 = order(ply2 + randomNo);
+                      : ply2 = order(ply2) + randomNo;
+              ply2 = order(ply2);
               Future.delayed(Duration(seconds: 1)).whenComplete(() {
                 setState(() {
                   ply2 = snakeLadderCmd(ply2);
@@ -331,7 +332,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ? randomNo == 1 ? ply1 = order(randomNo) : ply1 = 0
                         : ply1 + randomNo > 100
                             ? ply1 = ply1
-                            : ply1 = order(ply1) + order(randomNo);
+                            : ply1 = order(order(ply1) + randomNo);
                     Future.delayed(Duration(seconds: 1)).whenComplete(() {
                       setState(() {
                         ply1 = snakeLadderCmd(ply1);
