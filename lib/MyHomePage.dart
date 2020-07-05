@@ -13,7 +13,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Color ply1Color = Colors.amberAccent;
-  Color ply2Color = Colors.purpleAccent;
+  Color ply2Color = Colors.greenAccent;
   int randomNo = 1;
   bool toAnimate = false;
   int ply1 = 0, ply2 = 0;
@@ -274,7 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
               print(randomNo);
               toAnimate = false;
               ply2 == 0
-                  ? randomNo == 1 ? ply2 = randomNo : ply2 = 0
+                  ? randomNo == 1 ? ply2 = order(randomNo) : ply2 = 0
                   : ply2 + randomNo > 100
                       ? ply2 = ply2
                       : ply2 = order(order(ply2) + randomNo);
@@ -445,7 +445,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 20:
         ply = 29;
         break;
-      case 33:
+      case 23:
         ply = 45;
         break;
       case 40:
