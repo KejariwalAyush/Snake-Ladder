@@ -404,63 +404,61 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  int snakeLadderCmd(int ply1) {
-    // order(ply);
-    int ply = 0;
-    switch (ply1) {
+  int snakeLadderCmd(int ply) {
+    switch (ply) {
       // Snakes
       case 99:
-        ply = 65;
+        ply = 66;
         break;
       case 95:
         ply = 72;
         break;
       case 79:
-        ply = 42;
+        ply = 49;
         break;
       case 68:
-        ply = 50;
+        ply = 41;
         break;
       case 56:
         ply = 36;
         break;
-      case 47:
+      case 43:
         ply = 33;
         break;
       case 37:
-        ply = 21;
+        ply = 30;
         break;
-      case 26:
+      case 25:
         ply = 16;
         break;
-      case 30:
-        ply = 8;
+      case 21:
+        ply = 3;
         break;
       case 18:
-        ply = 4;
+        ply = 7;
         break;
 
       // Ladders
-      case 6:
+      case 5:
         ply = 14;
         break;
       case 20:
-        ply = 22;
+        ply = 29;
         break;
-      case 28:
-        ply = 46;
+      case 33:
+        ply = 45;
         break;
       case 40:
-        ply = 43;
+        ply = 48;
         break;
-      case 49:
+      case 42:
         ply = 53;
         break;
       case 58:
-        ply = 64;
+        ply = 67;
         break;
-      case 61:
-        ply = 81;
+      case 70:
+        ply = 90;
         break;
       case 71:
         ply = 92;
@@ -471,7 +469,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       default:
     }
-    return ply == 0 ? ply1 : order(ply);
+    return ply;
   }
 
   InkWell player1(BuildContext context) {
