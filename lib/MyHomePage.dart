@@ -19,6 +19,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int ply1 = 0, ply2 = 0;
   bool plyturn = true;
   bool isComputer = false;
+  var name = 'assets/images/custom.png';
+  var boardName1 = 'assets/images/board.png';
+  var boardName2 = 'assets/images/custom.png';
+  bool changeBoard = false;
 
   int order(int n) {
     if (n <= 10)
@@ -146,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           padding: EdgeInsets.all(2),
                           alignment: Alignment.topLeft,
                           child: Image.asset(
-                            'assets/images/custom.png',
+                            name,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -172,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           ? Center(
                                               child: Icon(
                                                 Icons.people,
-                                                color: Colors.grey,
+                                                color: Colors.redAccent,
                                               ),
                                             )
                                           : Center(
@@ -186,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               ? Center(
                                                   child: Icon(
                                                     Icons.people,
-                                                    color: Colors.grey,
+                                                    color: Colors.redAccent,
                                                   ),
                                                 )
                                               : Center(
@@ -404,74 +408,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  int snakeLadderCmd(int ply) {
-    switch (ply) {
-      // Snakes
-      case 99:
-        ply = 66;
-        break;
-      case 95:
-        ply = 72;
-        break;
-      case 79:
-        ply = 49;
-        break;
-      case 68:
-        ply = 41;
-        break;
-      case 56:
-        ply = 36;
-        break;
-      case 44:
-        ply = 33;
-        break;
-      case 37:
-        ply = 30;
-        break;
-      case 25:
-        ply = 16;
-        break;
-      case 21:
-        ply = 3;
-        break;
-      case 18:
-        ply = 7;
-        break;
-
-      // Ladders
-      case 5:
-        ply = 14;
-        break;
-      case 20:
-        ply = 29;
-        break;
-      case 23:
-        ply = 45;
-        break;
-      case 40:
-        ply = 48;
-        break;
-      case 42:
-        ply = 53;
-        break;
-      case 58:
-        ply = 67;
-        break;
-      case 70:
-        ply = 90;
-        break;
-      case 71:
-        ply = 92;
-        break;
-      case 75:
-        ply = 97;
-        break;
-
-      default:
-    }
-    return ply;
-  }
-
   InkWell player1(BuildContext context) {
     return InkWell(
       onTap: () {
@@ -606,6 +542,20 @@ class _MyHomePageState extends State<MyHomePage> {
                         content: new Text("Would you like Restart ?"),
                         actions: <Widget>[
                           FlatButton(
+                            child: Text('Change Board'),
+                            onPressed: () {
+                              setState(() {
+                                changeBoard = !changeBoard;
+                                changeBoard
+                                    ? name = boardName1
+                                    : name = boardName2;
+                                ply1 = 0;
+                                ply2 = 0;
+                              });
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          FlatButton(
                             child: Text('Yes'),
                             onPressed: () {
                               setState(() {
@@ -630,5 +580,113 @@ class _MyHomePageState extends State<MyHomePage> {
             })
       ],
     );
+  }
+
+  int snakeLadderCmd(int ply) {
+    switch (ply) {
+      // Snakes
+      case 99:
+        ply = 66;
+        break;
+      case 95:
+        ply = 72;
+        break;
+      case 79:
+        ply = 49;
+        break;
+      case 63:
+        ply = 41;
+        break;
+      case 56:
+        ply = 36;
+        break;
+      case 44:
+        ply = 33;
+        break;
+      case 37:
+        ply = 30;
+        break;
+      case 25:
+        ply = 16;
+        break;
+      case 21:
+        ply = 3;
+        break;
+      case 18:
+        ply = 7;
+        break;
+
+      // Ladders
+      case 5:
+        ply = 14;
+        break;
+      case 20:
+        ply = 29;
+        break;
+      case 23:
+        ply = 45;
+        break;
+      case 40:
+        ply = 48;
+        break;
+      case 42:
+        ply = 53;
+        break;
+      case 58:
+        ply = 67;
+        break;
+      case 70:
+        ply = 90;
+        break;
+      case 71:
+        ply = 92;
+        break;
+      case 75:
+        ply = 97;
+        break;
+
+      default:
+    }
+    return ply;
+  }
+
+  int snakeLadderCmd2(int ply) {
+    switch (ply) {
+      // Snakes
+      case 17:
+        ply = 5;
+        break;
+      case 33:
+        ply = 14;
+        break;
+      case 39:
+        ply = 23;
+        break;
+      case 54:
+        ply = 45;
+        break;
+      case 90:
+        ply = 48;
+        break;
+      case 99:
+        ply = 18;
+        break;
+
+      // Ladders
+      case 87:
+        ply = 95;
+        break;
+      case 44:
+        ply = 85;
+        break;
+      case 41:
+        ply = 59;
+        break;
+      case 9:
+        ply = 48;
+        break;
+      default:
+    }
+    return ply;
   }
 }
