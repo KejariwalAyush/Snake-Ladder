@@ -341,7 +341,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Future.delayed(Duration(seconds: 1)).whenComplete(() {
                       setState(() {
                         ply1 = changeBoard
-                            ? snakeLadderCmd2(ply2)
+                            ? snakeLadderCmd2(ply1)
                             : snakeLadderCmd(ply1);
                       });
                     });
@@ -431,7 +431,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Future.delayed(Duration(seconds: 1)).whenComplete(() {
                 setState(() {
                   ply1 = changeBoard
-                      ? snakeLadderCmd2(ply2)
+                      ? snakeLadderCmd2(ply1)
                       : snakeLadderCmd(ply1);
                 });
               });
