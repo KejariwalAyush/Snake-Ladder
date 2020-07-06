@@ -284,7 +284,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       : ply2 = order(order(ply2) + randomNo);
               Future.delayed(Duration(seconds: 1)).whenComplete(() {
                 setState(() {
-                  ply2 = snakeLadderCmd(ply2);
+                  ply2 = changeBoard
+                      ? snakeLadderCmd2(ply2)
+                      : snakeLadderCmd(ply2);
                 });
               });
               if (ply2 == 100)
@@ -338,7 +340,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             : ply1 = order(order(ply1) + randomNo);
                     Future.delayed(Duration(seconds: 1)).whenComplete(() {
                       setState(() {
-                        ply1 = snakeLadderCmd(ply1);
+                        ply1 = changeBoard
+                            ? snakeLadderCmd2(ply2)
+                            : snakeLadderCmd(ply1);
                       });
                     });
                     if (ply1 == 100)
@@ -426,7 +430,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       : ply1 = order(order(ply1) + randomNo);
               Future.delayed(Duration(seconds: 1)).whenComplete(() {
                 setState(() {
-                  ply1 = snakeLadderCmd(ply1);
+                  ply1 = changeBoard
+                      ? snakeLadderCmd2(ply2)
+                      : snakeLadderCmd(ply1);
                 });
               });
               if (ply1 == 100)
@@ -654,36 +660,36 @@ class _MyHomePageState extends State<MyHomePage> {
     switch (ply) {
       // Snakes
       case 17:
-        ply = 5;
+        ply = 6;
         break;
       case 33:
         ply = 14;
         break;
       case 39:
-        ply = 23;
+        ply = 28;
         break;
       case 54:
-        ply = 45;
+        ply = 46;
         break;
-      case 90:
-        ply = 48;
+      case 81:
+        ply = 43;
         break;
       case 99:
         ply = 18;
         break;
 
       // Ladders
-      case 87:
+      case 84:
         ply = 95;
         break;
-      case 44:
-        ply = 85;
+      case 47:
+        ply = 86;
         break;
-      case 41:
+      case 50:
         ply = 59;
         break;
-      case 9:
-        ply = 48;
+      case 2:
+        ply = 43;
         break;
       default:
     }
